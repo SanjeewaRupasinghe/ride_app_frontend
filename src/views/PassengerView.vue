@@ -1,0 +1,5 @@
+<template>
+    <div>
+        <h1>Passenger</h1>
+    </div>
+</template>

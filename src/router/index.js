@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import LandingView from "@/views/LandingView.vue";
 import LoginView from "@/views/LoginView.vue";
 import axios from "axios";
+import DriverView from "@/views/DriverView.vue";
+import PassengerView from "@/views/PassengerView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +17,16 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: LoginView,
+    },
+    {
+      path: "/driver",
+      name: "driver",
+      component: DriverView,
+    },
+    {
+      path: "/passenger",
+      name: "passenger",
+      component: PassengerView,
     },
   ],
 });
