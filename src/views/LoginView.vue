@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import axios from "axios";
 import { vMaska } from "maska/vue";
 import { useRouter } from "vue-router";
@@ -18,16 +18,22 @@ const errorMessages = reactive({
   code: null,
 });
 
+onMounted(() => {
+  if (localStorage.getItem("token")) {
+    router.push({ name: "landing" });
+  }
+});
+
 const handleSubmit = () => {
   axios
     .post("http://127.0.0.1:8000/api/login", {
       phone: clearText(credentials.phone),
     })
     .then((response) => {
-      console.log(response);
       waitingForResponse.value = true;
     })
     .catch((error) => {
+      console.log(error.response.data);
       errorMessages.phone = error.response.data.message;
     });
 };
@@ -39,10 +45,11 @@ const handleVerify = () => {
       login_code: parseInt(clearText(verify.code)),
     })
     .then((response) => {
-      console.log(response);
-      router.push({ name: "home" });
+      localStorage.setItem("token", response.data.token);
+      router.push({ name: "landing" });
     })
     .catch((error) => {
+      console.log(error.response.data);
       errorMessages.code = error.response.data.message;
     });
 };
